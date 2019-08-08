@@ -1,0 +1,26 @@
+version: '2'
+services:
+  nginx:
+    image: nginx:1.17-alpine
+    ports:
+      - 3000:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./website:/website
+    links:
+        - php
+  php:
+    build: .
+    ports:
+      - 9000:9000
+    volumes:
+      - ./website:/website
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://user@postgres/mydb
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_DB: mydb
