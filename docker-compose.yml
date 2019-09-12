@@ -21,6 +21,7 @@ services:
       - postgres
     environment:
       DATABASE_URL: postgres://user@postgres/mydb
+    container_name: php
   postgres:
     image: postgres:12-alpine
     environment:
@@ -30,7 +31,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./db:/var/lib/postgresql/data
+      - ./db:/var/lib/postgresql
   pgadmin:
     image: dpage/pgadmin4
     environment:
@@ -42,3 +43,17 @@ services:
       - postgres
     volumes:
       - ./db_admin:/var/lib/pgadmin
+  selenium-hub:
+    image: selenium/hub
+    ports:
+      - "4444"
+  chrome-node:
+    # Fix Chrome version to 74, as 75 errors with [SEVERE]: bind() failed: Cannot assign requested address (99)
+    image: selenium/node-chrome:3.141.59-oxygen
+    depends_on:
+      - selenium-hub
+    environment:
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
+    ports:
+      - "5555"
