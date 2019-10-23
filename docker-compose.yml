@@ -33,7 +33,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./db:/var/lib/postgresql
+      - ./db/data:/var/lib/postgresql
   pgadmin:
     image: dpage/pgadmin4
     environment:
@@ -44,7 +44,7 @@ services:
     links:
       - postgres
     volumes:
-      - ./db_admin:/var/lib/pgadmin
+      - ./db_admin/data:/var/lib/pgadmin
   selenium-hub:
     image: selenium/hub
     ports:
