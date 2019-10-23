@@ -1,8 +1,11 @@
 build:
-	docker-compose up --build
+	docker-compose -f ./docker-compose-testing.yml build 
 
-serve:
+serve: build
 	docker-compose up
+
+serve-prod: build
+	up
 
 rebuild-db:
 	docker exec php php artisan migrate
@@ -11,8 +14,8 @@ seed:
 	docker exec php php artisan db:seed
 
 clean-data:
-	rm -rf db/data/data/*
-	rm -rf db_admin/data/*
+	rm -rf db/data-testing/data/*
+	rm -rf db_admin/data-testing/*
 
 test: 
 	# todo add unit tests

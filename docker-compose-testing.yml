@@ -12,7 +12,7 @@ services:
   php:
     build:
       context: ./
-      dockerfile: php-fpm/Dockerfile
+      dockerfile: php-fpm/Dockerfile-testing
     ports:
       - 9000:9000
     volumes:
