@@ -1,0 +1,10 @@
+language: php
+
+services:
+  - docker
+
+before_install:
+  - make build
+
+script:
+  - make serve
