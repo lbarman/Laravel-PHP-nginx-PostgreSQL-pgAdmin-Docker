@@ -44,7 +44,7 @@ services:
     links:
       - postgres
     volumes:
-      - ./db_admin/data:/var/lib/pgadmin
+      - ./db_admin/data-testing:/var/lib/pgadmin
   selenium-hub:
     image: selenium/hub
     ports:

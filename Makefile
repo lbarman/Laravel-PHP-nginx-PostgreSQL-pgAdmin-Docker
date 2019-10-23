@@ -1,11 +1,18 @@
 build:
-	docker-compose -f ./docker-compose-testing.yml build 
+	docker-compose -f ./docker-compose-testing.yml down
+	docker-compose -f ./docker-compose-production.yml down
+	docker-compose -f ./docker-compose-testing.yml build --pull
+
+build-prod:
+	docker-compose -f ./docker-compose-testing.yml down
+	docker-compose -f ./docker-compose-production.yml down
+	docker-compose -f ./docker-compose-production.yml build --pull
 
 serve: build
-	docker-compose up
+	docker-compose -f ./docker-compose-testing.yml up
 
-serve-prod: build
-	up
+serve-prod: build-prod
+	docker-compose -f ./docker-compose-production.yml up
 
 rebuild-db:
 	docker exec php php artisan migrate
