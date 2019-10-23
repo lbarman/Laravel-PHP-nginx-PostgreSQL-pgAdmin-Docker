@@ -1,5 +1,8 @@
-serve:
+build:
 	docker-compose up --build
+
+serve:
+	docker-compose up
 
 rebuild-db:
 	docker exec php php artisan migrate
@@ -8,8 +11,8 @@ seed:
 	docker exec php php artisan db:seed
 
 clean-data:
-	rm -rf db/data/*
-	rm -rf db_admin/*
+	rm -rf db/data/data/*
+	rm -rf db_admin/data/*
 
 test: 
 	# todo add unit tests

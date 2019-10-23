@@ -1,19 +1,27 @@
+# Dockerized PHP Website
+
 The intent of the project is to have a fully-tested dockerized PHP website.
 
-What works:
+## What works
 
 - Website with Laravel, in its own docker
 - PHP in his own docker with php fpm
+- PHP packages with Composer
 - PostgresSQL server
 - PGAdmin
-- Selenium for tests
 
-Todo:
+## Todo
+
+- Selenium
+- Travis
+
+## Entrypoints
 
 - `make serve` to build and serve
 - `make test` to test (assumes things are running already)
 
-Remarks:
+## Remarks
+
 - Laravel uses `artisan` to build things. This should be called inside the docker
 
 - Website runs on port `8080`
