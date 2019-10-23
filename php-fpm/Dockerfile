@@ -20,7 +20,8 @@ RUN curl -sS https://getcomposer.org/installer | php \
         && mv composer.phar /usr/local/bin/ \
         && ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
 
-COPY website /website
+# important: build context should be .., so this refers to the root of the repo
+COPY website/data /website
 WORKDIR /website
 
 RUN composer install --prefer-source --no-interaction
