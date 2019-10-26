@@ -28,3 +28,8 @@ The intent of the project is to have a fully-tested dockerized PHP website.
 - Website runs on port `8080`
 - PGAgmin runs on port `8081`
 - PHP-Fpm runs on port `9000`
+
+- `website/data/storage` should allow "others" to write
+
+- `php artisan key:generate` regenerates secret keys for app-level crypto
+- `php artisan config:cache` flushes and rebuilds the config cache
