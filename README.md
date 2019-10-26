@@ -15,6 +15,7 @@ The intent of the project is to have a fully-tested dockerized PHP website.
 - Selenium
 - Travis
 - Switch website/data/.env given prod or testing
+- XDebug
 
 ## Entrypoints
 

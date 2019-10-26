@@ -30,6 +30,8 @@ services:
     container_name: php
     networks:
       - selenium-grid
+    environment:
+      XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9000 remote_enable=1
 
   postgres:
     image: postgres:12-alpine

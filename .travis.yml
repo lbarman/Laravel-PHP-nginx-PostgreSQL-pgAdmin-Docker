@@ -9,8 +9,13 @@ before_install:
   - make build
 
 before_script:
-  - make serve
+  - nohup make serve &
 
 script:
+  - make wait-for-serve
   - make rebuild-db
   - make test
+
+after_script:
+  - docker-compose -f ./docker-compose-testing.yml down
+  - docker-compose -f ./docker-compose-production.yml down
