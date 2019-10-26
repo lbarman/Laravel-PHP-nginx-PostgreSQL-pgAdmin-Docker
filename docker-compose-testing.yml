@@ -9,6 +9,9 @@ services:
       - ./website/data:/website
     links:
       - php
+    networks:
+      - selenium-grid
+      
   php:
     build:
       context: ./
@@ -25,6 +28,9 @@ services:
     environment:
       DATABASE_URL: postgres://user@postgres/mydb
     container_name: php
+    networks:
+      - selenium-grid
+
   postgres:
     image: postgres:12-alpine
     environment:
@@ -35,6 +41,9 @@ services:
       - 5432:5432
     volumes:
       - ./db/data:/var/lib/postgresql
+    networks:
+      - selenium-grid
+
   pgadmin:
     image: dpage/pgadmin4
     environment:
@@ -46,6 +55,8 @@ services:
       - postgres
     volumes:
       - ./db_admin/data-testing:/var/lib/pgadmin  
+    networks:
+      - selenium-grid
   
   selenium:
     image: selenium/hub:latest
@@ -53,6 +64,7 @@ services:
       - 4444
     networks:
       - selenium-grid
+    container_name: selenium
 
   chrome:
     image: selenium/node-chrome-debug:latest
