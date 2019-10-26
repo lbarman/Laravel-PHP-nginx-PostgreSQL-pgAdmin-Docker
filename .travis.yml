@@ -1,5 +1,7 @@
 language: php
 
+sudo: required
+
 services:
   - docker
 
@@ -7,8 +9,8 @@ before_install:
   - make build
 
 before_script:
-  - make rebuild-db
   - make serve
 
 script:
+  - make rebuild-db
   - make test
