@@ -6,6 +6,9 @@ services:
 before_install:
   - make build
 
-script:
+before_script:
   - make rebuild-db
   - make serve
+
+script:
+  - make test
