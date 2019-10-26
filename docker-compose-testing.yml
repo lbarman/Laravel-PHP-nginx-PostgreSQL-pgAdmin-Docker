@@ -52,7 +52,7 @@ services:
       - ./db_admin/data-testing:/var/lib/pgadmin
   
   selenium:
-    image: selenium/hub
+    image: selenium/hub:3.141.59-xenon
     ports:
       - "4444:4444"
     container_name: selenium
@@ -60,7 +60,7 @@ services:
       - nginx
 
   chrome:
-    image: selenium/node-chrome
+    image: selenium/node-chrome:3.141.59-xenon
     environment:
       HUB_HOST: selenium
     depends_on:
@@ -72,7 +72,7 @@ services:
       - nginx
 
   firefox:
-    image: selenium/node-firefox
+    image: selenium/node-firefox:3.141.59-xenon
     environment:
       HUB_HOST: selenium
     depends_on:
