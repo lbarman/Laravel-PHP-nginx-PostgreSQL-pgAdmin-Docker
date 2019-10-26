@@ -70,15 +70,3 @@ services:
     container_name: selenium-chrome
     links:
       - nginx
-
-  firefox:
-    image: selenium/node-firefox:3.141.59-xenon
-    environment:
-      HUB_HOST: selenium
-    depends_on:
-      - selenium
-    volumes:
-      - /dev/shm:/dev/shm
-    container_name: selenium-firefox
-    links:
-      - nginx
