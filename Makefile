@@ -25,9 +25,10 @@ clean-data:
 	rm -rf db_admin/data-testing/*
 
 test: 
-	# todo add unit tests
+	# returns 0 iff "php" container is running
+	docker inspect -f '{{.State.Running}}' php
+	
+	docker exec php phpunit
 	docker exec php php artisan dusk
 
-build-db-and-test: rebuild-db seed test
-
-.PHONY: serve rebuild-d seed test clean-data
+.PHONY: build build-prod serve serve-prod rebuild-db seed clean-data test

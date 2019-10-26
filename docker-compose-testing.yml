@@ -67,7 +67,8 @@ services:
     container_name: selenium
 
   chrome:
-    image: selenium/node-chrome-debug:latest
+    # Fix Chrome version to 74, as 75 errors with [SEVERE]: bind() failed: Cannot assign requested address (99)
+    image: selenium/node-chrome:3.141.59-oxygen
     environment:
       - HUB_PORT_4444_TCP_ADDR=selenium
       - HUB_PORT_4444_TCP_PORT=4444

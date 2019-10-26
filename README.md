@@ -33,3 +33,9 @@ The intent of the project is to have a fully-tested dockerized PHP website.
 
 - `php artisan key:generate` regenerates secret keys for app-level crypto
 - `php artisan config:cache` flushes and rebuilds the config cache
+
+// Create a test in the Feature directory...
+php artisan make:test UserTest
+
+// Create a test in the Unit directory...
+php artisan make:test UserTest --unit
