@@ -24,4 +24,8 @@ WORKDIR /website
 
 RUN composer install --prefer-source --no-interaction
 
+RUN pwd
+RUN ls -al
+RUN ls -al vendor
+
 ENV PATH="~/.composer/vendor/bin:./vendor/bin:${PATH}"
