@@ -21,10 +21,9 @@ serve-prod: build-prod
 
 # --------------- TESTING ----------------
 
-test:
+test: clear-cache
 	# returns 0 iff "php" container is running
 	docker inspect -f '{{.State.Running}}' php
-	$(MAKE) -C . clear-cache
 	$(MAKE) -C . test-unit
 	$(MAKE) -C . test-integration
 
@@ -43,7 +42,7 @@ host-vscode-setup:
 	sudo dnf install -y php php-json php-xdebug
 	$(info "Install PHP Debug and PHP IntelliSense from Felix Becker in VS Code.")
 
-rebuild-db:
+rebuild-db: clear-cache
 	docker exec php php artisan migrate
 
 seed:
