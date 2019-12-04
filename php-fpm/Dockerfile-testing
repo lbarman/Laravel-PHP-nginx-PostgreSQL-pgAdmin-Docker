@@ -22,10 +22,7 @@ RUN curl -sS https://getcomposer.org/installer | php \
 COPY website/data /website
 WORKDIR /website
 
-RUN composer install --prefer-source --no-interaction
-
-RUN pwd
-RUN ls -al
-RUN ls -al vendor
+# this is useless, a volume is going to be mapped on top of /website (and overwrite /website/vendor)
+# RUN composer install --prefer-source --no-interaction
 
 ENV PATH="~/.composer/vendor/bin:./vendor/bin:${PATH}"

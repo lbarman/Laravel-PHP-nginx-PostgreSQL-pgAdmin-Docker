@@ -13,8 +13,7 @@ before_script:
 
 script:
   - make wait-for-serve
-  - docker exec php ls -al
-  - docker exec php ls -al vendor
+  - make php-install
   - make rebuild-db
   - make test
 

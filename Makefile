@@ -55,7 +55,11 @@ clean-data:
 wait-for-serve:
 	./utils/wait-for-docker-container.sh
 
+php-install:
+	# useful after having mapped a volume on top of /website (masking /website/vendor)
+	docker exec php composer install --prefer-source --no-interaction 
+
 update:
 	docker exec php composer update
 
-.PHONY: build build-prod serve serve-prod rebuild-db seed clean-data wait-for-serve clear-cache test test-unit test-integration
+.PHONY: build build-prod serve serve-prod rebuild-db seed clean-data php-install wait-for-serve clear-cache test test-unit test-integration
