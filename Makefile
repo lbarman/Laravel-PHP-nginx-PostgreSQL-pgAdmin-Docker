@@ -56,4 +56,7 @@ clean-data:
 wait-for-serve:
 	./utils/wait-for-docker-container.sh
 
+update:
+	docker exec php composer update
+
 .PHONY: build build-prod serve serve-prod rebuild-db seed clean-data wait-for-serve clear-cache test test-unit test-integration
