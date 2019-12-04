@@ -24,8 +24,12 @@ serve-prod: build-prod
 test:
 	# returns 0 iff "php" container is running
 	docker inspect -f '{{.State.Running}}' php
+	$(MAKE) -C . clear-cache
 	$(MAKE) -C . test-unit
 	$(MAKE) -C . test-integration
+
+clear-cache:
+	docker exec php php artisan config:cache
 
 test-unit:
 	docker exec php phpunit
@@ -52,4 +56,4 @@ clean-data:
 wait-for-serve:
 	./utils/wait-for-docker-container.sh
 
-.PHONY: build build-prod serve serve-prod rebuild-db seed clean-data wait-for-serve test test-unit test-integration
+.PHONY: build build-prod serve serve-prod rebuild-db seed clean-data wait-for-serve clear-cache test test-unit test-integration

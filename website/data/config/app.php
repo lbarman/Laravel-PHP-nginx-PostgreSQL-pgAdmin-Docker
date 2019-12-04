@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://test2:8080'),
+    'url' => env('APP_URL', 'http://nginx'),
 
     'asset_url' => env('ASSET_URL', null),
 
