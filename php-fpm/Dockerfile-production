@@ -3,23 +3,23 @@ FROM php:7.2-fpm-alpine
 # Production settings to be checked
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
-RUN apk update && apk add build-base
+RUN apk update
 
-RUN apk add postgresql postgresql-dev \
+RUN apk add build-base postgresql postgresql-dev zlib-dev zip libzip-dev \
   && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-  && docker-php-ext-install pdo pdo_pgsql pgsql
+  && docker-php-ext-configure zip --with-libzip \
+  && docker-php-ext-install pdo pdo_pgsql pgsql zip
 
-RUN apk add zlib-dev git zip \
-  && docker-php-ext-install zip
-
+RUN apk --no-cache add pcre-dev ${PHPIZE_DEPS} \ 
+  && pecl install xdebug \
+  && docker-php-ext-enable xdebug \
+  && apk del pcre-dev ${PHPIZE_DEPS}
+  
 RUN curl -sS https://getcomposer.org/installer | php \
         && mv composer.phar /usr/local/bin/ \
         && ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
+ENV PATH="~/.composer/vendor/bin:./vendor/bin:${PATH}"
 
 # important: build context should be .., so this refers to the root of the repo
 COPY website/data /website
 WORKDIR /website
-
-RUN composer install --prefer-source --no-interaction --no-dev
-
-ENV PATH="~/.composer/vendor/bin:./vendor/bin:${PATH}"

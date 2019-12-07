@@ -1,28 +1,34 @@
 FROM php:7.2-fpm-alpine
 
-RUN apk update && apk add build-base
+RUN apk update
 
-RUN apk add postgresql postgresql-dev \
+RUN apk add build-base bash postgresql postgresql-dev zlib-dev git zip libzip-dev vim \
   && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-  && docker-php-ext-install pdo pdo_pgsql pgsql
+  && docker-php-ext-configure zip --with-libzip \
+  && docker-php-ext-install pdo pdo_pgsql pgsql zip
 
 RUN apk --no-cache add pcre-dev ${PHPIZE_DEPS} \ 
   && pecl install xdebug \
   && docker-php-ext-enable xdebug \
   && apk del pcre-dev ${PHPIZE_DEPS}
 
-RUN apk add zlib-dev git zip \
-  && docker-php-ext-install zip
-
+# Install composer
 RUN curl -sS https://getcomposer.org/installer | php \
         && mv composer.phar /usr/local/bin/ \
         && ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
 
-# important: build context should be .., so this refers to the root of the repo
+ENV PATH="~/.composer/vendor/bin:./vendor/bin:${PATH}"
+
+# important: build context should be .., so this refers to the root of the repo,
+# not the location of this Dockerfile
 COPY website/data /website
 WORKDIR /website
 
-# this is useless, a volume is going to be mapped on top of /website (and overwrite /website/vendor)
+# Pitfall: the following is useless, a volume is going to be mapped on top 
+# of /website (and overwrite /website/vendor)
 # RUN composer install --prefer-source --no-interaction
 
-ENV PATH="~/.composer/vendor/bin:./vendor/bin:${PATH}"
+# Add script for image upload (used to report Dusk failures)
+RUN wget -O /usr/local/bin/imgur.sh https://raw.githubusercontent.com/tremby/imgur.sh/master/imgur.sh
+RUN chmod ug+x /usr/local/bin/imgur.sh
+COPY utils/dusk-failure-report.sh /usr/local/bin/

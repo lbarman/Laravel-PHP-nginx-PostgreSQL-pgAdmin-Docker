@@ -1,9 +1,7 @@
 
 # --------------- DEV ----------------
 
-build:
-	docker-compose -f ./docker-compose-testing.yml down
-	docker-compose -f ./docker-compose-production.yml down
+build: all-dockers-down
 	docker-compose -f ./docker-compose-testing.yml build --pull
 
 serve: build
@@ -11,9 +9,7 @@ serve: build
 
 # --------------- PROD ----------------
 
-build-prod:
-	docker-compose -f ./docker-compose-testing.yml down
-	docker-compose -f ./docker-compose-production.yml down
+build-prod: all-dockers-down
 	docker-compose -f ./docker-compose-production.yml build --pull
 
 serve-prod: build-prod
@@ -27,39 +23,48 @@ test: clear-cache
 	$(MAKE) -C . test-unit
 	$(MAKE) -C . test-integration
 
-clear-cache:
-	docker exec php php artisan config:cache
-
 test-unit:
 	docker exec php phpunit
 
 test-integration:
-	docker exec php php artisan dusk
+	docker exec php php artisan dusk || docker exec php dusk-failure-report.sh
 
-# --------------- TOOLS ----------------
+# --------------- CLEANUP ----------------
 
-host-vscode-setup:
-	sudo dnf install -y php php-json php-xdebug
-	$(info "Install PHP Debug and PHP IntelliSense from Felix Becker in VS Code.")
+all-dockers-down:
+	docker-compose -f ./docker-compose-testing.yml down
+	docker-compose -f ./docker-compose-production.yml down
 
-rebuild-db: clear-cache
-	docker exec php php artisan migrate
+clear-cache:
+	docker exec php php artisan config:cache
 
-seed:
-	docker exec php php artisan db:seed
-
-clean-data:
+clear-db-data:
 	rm -rf db/data-testing/data/*
 	rm -rf db_admin/data-testing/*
+
+# --------------- Travis and automated install ----------------
 
 wait-for-serve:
 	./utils/wait-for-docker-container.sh
 
 php-install:
-	# useful after having mapped a volume on top of /website (masking /website/vendor)
+	# need to be called AFTER having mapped a volume on top of /website (which masks /website/vendor)
 	docker exec php composer install --prefer-source --no-interaction 
 
-update:
+rebuild-db: clear-cache
+	docker exec php php artisan migrate
+
+# --------------- Manual Operations ----------------
+
+host-vscode-setup:
+	sudo dnf install -y php php-json php-xdebug
+	$(info "Install PHP Debug and PHP IntelliSense from Felix Becker in VS Code.")
+
+seed:
+	docker exec php php artisan db:seed
+
+composer-update:
 	docker exec php composer update
 
-.PHONY: build build-prod serve serve-prod rebuild-db seed clean-data php-install wait-for-serve clear-cache test test-unit test-integration
+# all rules are phony, no exception
+.PHONY: build build-prod all-dockers-down serve serve-prod rebuild-db seed clear-db-data php-install wait-for-serve clear-cache test test-unit test-integration composer-update
