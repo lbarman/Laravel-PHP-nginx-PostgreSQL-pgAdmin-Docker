@@ -19,4 +19,5 @@ done
 echo "Uploading " "${SCREENSHOT_FOLDER}"*.png
 imgur.sh "${SCREENSHOT_FOLDER}"*.png
 
-echo "[Done]"
+echo "Done; quitting with status 1"
+exit 1
