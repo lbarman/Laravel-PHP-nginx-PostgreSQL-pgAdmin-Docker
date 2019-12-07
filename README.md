@@ -25,6 +25,8 @@ The intent of the project is to have a fully-tested dockerized PHP website.
 
 ## Remarks
 
+- Host should run VSCode (XDEBUG config is given), have PHP set for linting
+
 - Laravel uses `artisan` to build things. This should be called inside the docker
 
 - Website runs on port `8080`

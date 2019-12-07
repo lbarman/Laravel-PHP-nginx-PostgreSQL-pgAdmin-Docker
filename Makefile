@@ -58,7 +58,7 @@ rebuild-db: clear-cache
 
 host-vscode-setup:
 	sudo dnf install -y php php-json php-xdebug
-	$(info "Install PHP Debug and PHP IntelliSense from Felix Becker in VS Code.")
+	$(info "Install PHP Debug and PHP IntelliSense from Felix Becker in VS Code, and phpfmt extension.")
 
 seed:
 	docker exec php php artisan db:seed
