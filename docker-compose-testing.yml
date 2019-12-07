@@ -9,7 +9,7 @@ services:
       - ./website/data:/website
     links:
       - php
-      
+
   php:
     build:
       context: ./
@@ -26,7 +26,7 @@ services:
       DATABASE_URL: postgres://user@postgres/mydb
     container_name: php
     environment:
-      XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9000 remote_enable=1
+      XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9001 remote_enable=1
 
   postgres:
     image: postgres:12-alpine

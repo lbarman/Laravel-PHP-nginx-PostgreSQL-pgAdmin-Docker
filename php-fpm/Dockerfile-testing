@@ -33,3 +33,12 @@ COPY utils/imgur.sh /usr/local/bin/
 COPY utils/dusk-failure-report.sh /usr/local/bin/
 RUN chmod ug+x /usr/local/bin/imgur.sh
 RUN chmod ug+x /usr/local/bin/dusk-failure-report.sh
+
+# Add script to fix host path on Linux (needed for XDEBUG)
+COPY utils/fix-host-docker.sh /usr/local/bin/
+RUN chmod ug+x /usr/local/bin/fix-host-docker.sh
+
+# change entrypoint to run fix-host-docker.sh before the normal command
+COPY php-fpm/entrypoint.sh /entrypoint.sh
+RUN chmod ug+x /entrypoint.sh
+ENTRYPOINT ["sh", "/entrypoint.sh"]
