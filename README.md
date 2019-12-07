@@ -9,13 +9,14 @@ The intent of the project is to have a fully-tested dockerized PHP website.
 - PHP packages with Composer
 - PostgresSQL server
 - PGAdmin
+- Dusk/Selenium
+- Travis
+- XDEBUG
 
 ## Todo
 
-- Selenium
-- Travis
+- PHP Linter
 - Switch website/data/.env given prod or testing
-- XDebug
 
 ## Entrypoints
 
@@ -29,6 +30,7 @@ The intent of the project is to have a fully-tested dockerized PHP website.
 - Website runs on port `8080`
 - PGAgmin runs on port `8081`
 - PHP-Fpm runs on port `9000`
+- XDebug should run on `9001` on host (to be run in VSCode, and *started* before loading the page)
 
 - `website/data/storage` should allow "others" to write
 
