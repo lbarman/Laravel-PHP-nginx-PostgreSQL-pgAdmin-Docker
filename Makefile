@@ -64,6 +64,7 @@ seed:
 	docker exec php php artisan db:seed
 
 composer-update:
+	docker exec php composer install
 	docker exec php composer update
 
 # all rules are phony, no exception

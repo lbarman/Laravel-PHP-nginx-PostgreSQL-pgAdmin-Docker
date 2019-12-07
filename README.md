@@ -42,3 +42,8 @@ php artisan make:test UserTest
 
 // Create a test in the Unit directory...
 php artisan make:test UserTest --unit
+
+## To credit:
+
+https://medium.com/@jasonterando/debugging-with-visual-studio-code-xdebug-and-docker-on-windows-b63a10b0dec
+
