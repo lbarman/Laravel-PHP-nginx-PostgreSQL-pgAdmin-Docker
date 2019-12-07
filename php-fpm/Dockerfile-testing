@@ -29,6 +29,7 @@ WORKDIR /website
 # RUN composer install --prefer-source --no-interaction
 
 # Add script for image upload (used to report Dusk failures)
-RUN wget -O /usr/local/bin/imgur.sh https://raw.githubusercontent.com/tremby/imgur.sh/master/imgur.sh
-RUN chmod ug+x /usr/local/bin/imgur.sh
+COPY utils/imgur.sh /usr/local/bin/
 COPY utils/dusk-failure-report.sh /usr/local/bin/
+RUN chmod ug+x /usr/local/bin/imgur.sh
+RUN chmod ug+x /usr/local/bin/dusk-failure-report.sh
