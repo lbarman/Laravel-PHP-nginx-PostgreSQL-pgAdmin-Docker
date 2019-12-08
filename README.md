@@ -15,6 +15,7 @@ The intent of the project is to have a fully-tested dockerized PHP website.
 
 ## Todo
 
+- Fix permission settings (each container is root)
 - PHP Linter
 - Switch website/data/.env given prod or testing
 
@@ -39,6 +40,19 @@ The intent of the project is to have a fully-tested dockerized PHP website.
 - `php artisan key:generate` regenerates secret keys for app-level crypto
 - `php artisan config:cache` flushes and rebuilds the config cache
 
+// Magic php cache rebuid thing
+composer dump-autoload
+
+// Create a model with migration
+
+
+// Rebuild db
+php artisan migrate:refresh (eventuellement --seed)
+
+// Create a seed
+php artisan make:seeder SectionsTableSeeder
+
+
 // Create a test in the Feature directory...
 php artisan make:test UserTest
 
@@ -49,3 +63,6 @@ php artisan make:test UserTest --unit
 
 https://medium.com/@jasonterando/debugging-with-visual-studio-code-xdebug-and-docker-on-windows-b63a10b0dec
 
+https://www.toptal.com/laravel/restful-laravel-api-tutorial
+
+https://laravel-news.com/404-responses-laravel-api
