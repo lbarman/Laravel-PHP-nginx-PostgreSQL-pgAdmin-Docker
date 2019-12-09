@@ -66,3 +66,8 @@ https://medium.com/@jasonterando/debugging-with-visual-studio-code-xdebug-and-do
 https://www.toptal.com/laravel/restful-laravel-api-tutorial
 
 https://laravel-news.com/404-responses-laravel-api
+
+https://medium.com/@shrikeh/setting-up-nginx-and-php-fpm-in-docker-with-unix-sockets-6fdfbdc19f91
+
+>> https://jtreminio.com/blog/running-docker-containers-as-current-host-user/
+
