@@ -24,6 +24,17 @@ The intent of the project is to have a fully-tested dockerized PHP website.
 - `make serve` to build and serve
 - `make test` to test (assumes things are running already)
 
+## Pain points solved
+
+- No turnkey setup available
+- Postgres's root file conflict with docker build (solution: .dockerbuild)
+- Artisan creates files as root (solution: link on host, php needs to be there anyway)
+- Composer install on docker build shadowed by volume (solution: separate docker install command)
+- How to start everything on Travis (solution: wait-for-php)
+- Dusk export on failures (copy to stdout + upload to imgur)
+- Figuring out which caches to clear
+- XDEBUG on host (solution: hack host.docker.local on Linux)
+
 ## Remarks
 
 - Host should run VSCode (XDEBUG config is given), have PHP set for linting
