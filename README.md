@@ -15,7 +15,7 @@ The intent of the project is to have a fully-tested dockerized PHP website.
 
 ## Todo
 
-- Fix permission settings (each container is root)
+- PHPStorm ?
 - PHP Linter
 - Switch website/data/.env given prod or testing
 
