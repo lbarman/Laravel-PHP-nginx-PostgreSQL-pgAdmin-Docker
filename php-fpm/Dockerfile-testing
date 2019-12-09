@@ -19,14 +19,13 @@ RUN curl -sS https://getcomposer.org/installer | php \
 
 ENV PATH="~/.composer/vendor/bin:./vendor/bin:${PATH}"
 
-# important: build context should be .., so this refers to the root of the repo,
-# not the location of this Dockerfile
-COPY website/data /website
-WORKDIR /website
-
 # Pitfall: the following is useless, a volume is going to be mapped on top 
 # of /website (and overwrite /website/vendor)
+# COPY website/data /website
 # RUN composer install --prefer-source --no-interaction
+
+RUN mkdir /website
+WORKDIR /website
 
 # Add script for image upload (used to report Dusk failures)
 COPY utils/imgur.sh /usr/local/bin/
