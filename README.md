@@ -1,8 +1,8 @@
-# Nginx+Php+Postgres+PgAdmin on Docker in 2019 
+# PHP+nginx+PostgreSQL+pgAdmin on Docker in 2019 
 
 This code is a template for a PHP website ([Laravel](https://laravel.com/) served via nginx and [php-fpm](https://php-fpm.org/)) along with its database ([PostgreSQL](https://www.postgresql.org)+[pgAdmin](https://www.pgadmin.org/)).
 
-It *just works*: [![Build Status](https://travis-ci.com/lbarman/laravel-test.svg?branch=master)](https://travis-ci.com/lbarman/laravel-test)
+It *just works*: [![Build Status](https://travis-ci.com/lbarman/laravel-test.svg?branch=master)](https://travis-ci.com/lbarman/laravel-test). Clone and get started.
 
 **Why?** Because this has been surprisingly time-consuming to setup (see the "pain points" below), and it really shouldn't be.
 
@@ -10,7 +10,7 @@ It *just works*: [![Build Status](https://travis-ci.com/lbarman/laravel-test.svg
 
 - Minimal website with Laravel, served via nginx and php-fpm, all wired up through docker-compose
 - PostgreSQL+pgAdmin
-- Source code + DB files mapped to host through *volumes*
+- Source code + DB files mapped to host through Docker volumes
 - Simplified dev cycle through `Makefile` commands (`make serve`, `serve-dev`, `test-unit`, `test-integration`, etc)
 - Composer to manage PHP libraries
 - **Working CI setup** with Travis for unit tests, plus...
@@ -21,7 +21,8 @@ It *just works*: [![Build Status](https://travis-ci.com/lbarman/laravel-test.svg
 
 - Clone this repo
 - `make serve` to build and serve
-- `make test` to test (assumes things are running already)
+- `make composer-update` on the first run
+- `make test` to run unit and integration tests
 
 ## Pain points solved
 
@@ -32,23 +33,7 @@ It *just works*: [![Build Status](https://travis-ci.com/lbarman/laravel-test.svg
 - Getting Dusk/Selenium's output on failures on Travis (solution: [a script](./utils/dusk-failure-report.sh) to copy to stdout and upload screenshots to imgur)
 - Getting the PHP container to connect to XDEBUG on host (solution: [a hack](./utils/fix-host-docker.sh) to fix `host.docker.internal` on Linux)
 
-*(lacks CI)
-
-**(lacks DB)
-
-## Acknowledgements
-
-In no particular order. Thanks
-
-- https://medium.com/@jasonterando/debugging-with-visual-studio-code-xdebug-and-docker-on-windows-b63a10b0dec
-
-- https://www.toptal.com/laravel/restful-laravel-api-tutorial
-
-- https://laravel-news.com/404-responses-laravel-api
-
-- https://medium.com/@shrikeh/setting-up-nginx-and-php-fpm-in-docker-with-unix-sockets-6fdfbdc19f91
-
-- https://jtreminio.com/blog/running-docker-containers-as-current-host-user/
+*(lacks CI) **(lacks DB)
 
 ## Remarks
 
