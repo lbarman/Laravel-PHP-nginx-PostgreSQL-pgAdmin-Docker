@@ -1,39 +1,54 @@
-# Dockerized PHP Website
+# Nginx+Php+Postgres+PgAdmin on Docker in 2019 
 
-The intent of the project is to have a fully-tested dockerized PHP website.
+This code is a template for a PHP website ([Laravel](https://laravel.com/) served via nginx and [php-fpm](https://php-fpm.org/)) along with its database ([PostgreSQL](https://www.postgresql.org)+[pgAdmin](https://www.pgadmin.org/)).
 
-## What works
+It *just works*: [![Build Status](https://travis-ci.com/lbarman/laravel-test.svg?branch=master)](https://travis-ci.com/lbarman/laravel-test)
 
-- Website with Laravel, in its own docker
-- PHP in his own docker with php fpm
-- PHP packages with Composer
-- PostgresSQL server
-- PGAdmin
-- Dusk/Selenium
-- Travis
-- XDEBUG
+**Why?** Because this has been surprisingly time-consuming to setup (see the "pain points" below), and it really shouldn't be.
 
-## Todo
+## What's in the box
 
-- PHPStorm ?
-- PHP Linter
-- Switch website/data/.env given prod or testing
+- Minimal website with Laravel, served via nginx and php-fpm, all wired up through docker-compose
+- PostgreSQL+pgAdmin
+- Source code + DB files mapped to host through *volumes*
+- Simplified dev cycle through `Makefile` commands (`make serve`, `serve-dev`, `test-unit`, `test-integration`, etc)
+- Composer to manage PHP libraries
+- **Working CI setup** with Travis for unit tests, plus...
+- **Dusk/Selenium** for integration-tests, which runs on Travis **and** uploads failing screenshots to [imgur](https://imgur.com/)
+- Working XDEBUG setup for VS Studio Code/PHPStorm (so you can debug with breakpoints)
 
-## Entrypoints
+## How to use
 
+- Clone this repo
 - `make serve` to build and serve
 - `make test` to test (assumes things are running already)
 
 ## Pain points solved
 
-- No turnkey setup available
-- Postgres's root file conflict with docker build (solution: .dockerbuild)
-- Artisan creates files as root (solution: link on host, php needs to be there anyway)
-- Composer install on docker build shadowed by volume (solution: separate docker install command)
-- How to start everything on Travis (solution: wait-for-php)
-- Dusk export on failures (copy to stdout + upload to imgur)
-- Figuring out which caches to clear
-- XDEBUG on host (solution: hack host.docker.local on Linux)
+- No turnkey setup available: either [partial](https://github.com/thayronarrais/docker-laravel-postgres-nginx)* [solutions](https://github.com/dimadeush/docker-nginx-php-laravel)**, or [many](https://dev.to/baliachbryan/deploying-your-laravel-app-on-docker-with-nginx-and-mysql-56ni) [blog](https://www.digitalocean.com/community/tutorials/how-to-set-up-laravel-nginx-and-mysql-with-docker-compose) [posts](https://www.howtoforge.com/tutorial/dockerizing-laravel-with-nginx-mysql-and-docker-compose/) which I had to painfully combine to get this setup
+- PostgreSQL creates files as **root**, which conflicts with docker build (solution: appropriate [`.dockerbuild`](.dockerbuild)). Similar problem for `artisan` (solution: appropriate [alias](./artisan))
+- Running `composer install` in the `Dockerfile` was shadowed by the volume mapping the source to the host (solution: separate command in `Makefile`, required once only)
+- Simultaneously running `make serve` and `make test` on Travis (solution: script to [busy-wait on container](./utils/wait-for-docker-container.sh))
+- Getting Dusk/Selenium's output on failures on Travis (solution: [a script](./utils/dusk-failure-report.sh) to copy to stdout and upload screenshots to imgur)
+- Getting the PHP container to connect to XDEBUG on host (solution: [a hack](./utils/fix-host-docker.sh) to fix `host.docker.internal` on Linux)
+
+*(lacks CI)
+
+**(lacks DB)
+
+## Acknowledgements
+
+In no particular order. Thanks
+
+- https://medium.com/@jasonterando/debugging-with-visual-studio-code-xdebug-and-docker-on-windows-b63a10b0dec
+
+- https://www.toptal.com/laravel/restful-laravel-api-tutorial
+
+- https://laravel-news.com/404-responses-laravel-api
+
+- https://medium.com/@shrikeh/setting-up-nginx-and-php-fpm-in-docker-with-unix-sockets-6fdfbdc19f91
+
+- https://jtreminio.com/blog/running-docker-containers-as-current-host-user/
 
 ## Remarks
 
@@ -70,15 +85,4 @@ php artisan make:test UserTest
 // Create a test in the Unit directory...
 php artisan make:test UserTest --unit
 
-## To credit:
-
-https://medium.com/@jasonterando/debugging-with-visual-studio-code-xdebug-and-docker-on-windows-b63a10b0dec
-
-https://www.toptal.com/laravel/restful-laravel-api-tutorial
-
-https://laravel-news.com/404-responses-laravel-api
-
-https://medium.com/@shrikeh/setting-up-nginx-and-php-fpm-in-docker-with-unix-sockets-6fdfbdc19f91
-
->> https://jtreminio.com/blog/running-docker-containers-as-current-host-user/
 
