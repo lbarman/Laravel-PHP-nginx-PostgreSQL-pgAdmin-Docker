@@ -2,7 +2,7 @@
 
 This code is a template for a PHP website ([Laravel](https://laravel.com/) served via nginx and [php-fpm](https://php-fpm.org/)) along with its database ([PostgreSQL](https://www.postgresql.org)+[pgAdmin](https://www.pgadmin.org/)).
 
-It *just works*: [![Build Status](https://travis-ci.com/lbarman/laravel-test.svg?branch=master)](https://travis-ci.com/lbarman/laravel-test). Clone and get started.
+It *just works*: [![Build Status](https://travis-ci.com/lbarman/Laravel-PHP-nginx-PostgreSQL-pgAdmin-Docker.svg?branch=master)](https://travis-ci.com/lbarman/Laravel-PHP-nginx-PostgreSQL-pgAdmin-Docker). Clone and get started.
 
 **Why?** Because this has been surprisingly time-consuming to setup (see the "pain points" below), and it really shouldn't be.
 
